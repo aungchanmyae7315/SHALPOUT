@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="#fff"/>
+    </linearGradient>
+    <clipPath id="clip-path">
+      <rect id="Home" width="32" height="32" transform="translate(45 12)" fill="url(#linear-gradient)"/>
+    </clipPath>
+  </defs>
+  <g id="Mask_Group_28" data-name="Mask Group 28" transform="translate(-45 -12)" clip-path="url(#clip-path)">
+    <path id="home-28" d="M7.962,22.528V18.859a1.7,1.7,0,0,1,1.708-1.7h3.449a1.715,1.715,0,0,1,1.208.5,1.69,1.69,0,0,1,.5,1.2v3.669a1.456,1.456,0,0,0,.427,1.04A1.478,1.478,0,0,0,16.3,24h2.353a4.152,4.152,0,0,0,2.932-1.2A4.092,4.092,0,0,0,22.8,19.893V9.44a2.967,2.967,0,0,0-1.074-2.283l-8-6.347A3.717,3.717,0,0,0,8.982.9L1.16,7.158A2.969,2.969,0,0,0,0,9.44V19.883A4.132,4.132,0,0,0,4.147,24h2.3a1.478,1.478,0,0,0,1.483-1.461Z" transform="translate(49.6 16)" fill="url(#linear-gradient)"/>
+  </g>
+</svg>
