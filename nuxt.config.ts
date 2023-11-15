@@ -30,7 +30,7 @@ export default defineNuxtConfig({
       { type:"text/javascript", hid:"main", defer:true,  src: 'https://unpkg.com/vue@3/dist/vue.global.js' },
       { type:"text/javascript", hid:"main", defer:true,  src: 'https://unpkg.com/element-plus' },
       { type:"text/javascript", hid:"main", defer:true,  src: 'https://cdnjs.cloudflare.com/ajax/libs/vuex/3.5.1/vuex.min.js' },
-      { type:"text/javascript", hid:"main", defer:true,  src: 'https://unpkg.com/vue@3/dist/vue.global.js' },
+      { type:"text/javascript", hid:"main", defer:true,  src: 'https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.30/vue.global.min.js' },
       { type:"text/javascript", hid:"main", defer:true,  src: 'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js' },
     ],
   }
