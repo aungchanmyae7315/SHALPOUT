@@ -17,22 +17,22 @@
 <script>
 
     import AppLinks from '~/components/AppLinks'
-
+    import { useStore } from '~/store/state';
     export default {
 
         components: { AppLinks },
 
         methods: {
-            hideSidebar() {
-                this.$store.dispatch('toggleSidebar')
-            }
+            // hideSidebar() {
+            //     this.store.toggleSidebar()
+            // }
         },
 
         computed: {
 
-            isSidebar() {
-                return this.$store.getters['toggleSidebar']
-            }
+            // isSidebar() {
+            //     return this.store.toggleSidebar()
+            // }
 
         }
 

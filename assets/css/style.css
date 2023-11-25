@@ -13,7 +13,120 @@
   padding: 0;
   margin: 0;
 }
+a:hover {
+  color:#fff !important;
+}
+ .v-text-field .v-field--no-label input {
+  padding:10px;
+ }
+.v-input--density-default .v-field__input {
+  min-height: 34px !important;
+}
+.v-btn__content {
+  color:unset;
+}
+.menu-nav-list {
+  padding:0;
+  margin:0;
+}
+.menu-nav-list .nav-item {
+  text-decoration: none;
+}
 
+
+.app-container{
+  height: 100%;
+  position: relative;
+  display: grid;
+  grid-template: auto 1fr auto / 1fr;
+}
+.app-content{
+  overflow: hidden;
+  align-items: center;
+  justify-items: center;
+  padding-top:80px;
+}
+.particles-js-canvas-el  {
+background-color: #000;
+position: fixed;
+}
+
+.v-img__img--contain {
+object-fit: cover !important;
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+width:100%;
+height:100%;
+}
+
+.v-btn {
+  text-transform: math-auto !important;
+}
+
+.viber_btn {
+background-color: initial;
+background-image: linear-gradient(240deg, #3f29ca, #7360f2) !important;
+border: 1px solid #fbff00 !important;
+border-radius: 50px 50px 50px 50px !important;
+box-shadow: 0 0 10px 0 rgba(4, 113, 0, .5);
+color: #fff !important;
+display: inline-block;
+font-size: 19px;
+font-weight: 500;
+padding: 29px 70px !important;
+text-decoration: none;
+transition: .5s;
+}
+.viber_btn .v-btn__content , .line_btn .v-btn__content , .register_btn_home .v-btn__content {
+  position: relative;
+  bottom:12px;
+}
+.line_btn {
+background-color: initial;
+background-image: linear-gradient(240deg,#3f9a02 30%,#0a811a 70%) !important;
+border: 1px solid #fbff00 !important;
+border-radius: 50px 50px 50px 50px  !important;
+box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+color: #fff  !important;
+display: inline-block;
+font-size: 19px;
+font-weight: 500;
+margin-top:20px;
+padding: 29px 70px !important;
+text-decoration: none;
+transition: .5s;
+}
+.register_btn_home {
+  background-color: initial;
+background-image: linear-gradient(120deg,#059b00 30%,#abc201 70%) !important;
+border: 1px solid #fbff00 !important;
+border-radius: 50px 50px 50px 50px  !important;
+box-shadow: 0 0 10px 0 rgba(0,0,0,.5);
+color: #fff  !important;
+display: inline-block;
+font-size: 19px;
+font-weight: 500;
+margin-top:20px;
+padding: 29px 70px !important;
+width: 400px;
+text-decoration: none;
+transition: .5s;
+}
+
+.social_btn:hover {
+-webkit-transform: scale(.9);
+transform: scale(.9);
+transition: .5s;
+color: #fff;
+}
+
+.social_btn svg {
+width: 28px;
+}
+.el-carousel__container {
+  height: 600px !important;
+}
 .html {
   font-size: 62.5%;
 }
@@ -111,7 +224,7 @@ body {
       height:230px !important;
       position: absolute;
       right:0;
-      left:16%;
+      left:12%;
       bottom:65%;
     }
 
@@ -136,9 +249,8 @@ body {
     position: relative;
     background: transparent;
     text-align: center;
-    height: 4.5rem;
+    height: 3rem;
     text-decoration: none;
-    color: #40403F;
   }
   @media (max-width: 769px) {
     nav a {
@@ -223,36 +335,41 @@ body {
   }
   .heading_one {
     position: relative;
-    padding:30px 0;
-  ;
+    padding:50px;
+    
   }
   .heading_two{
     position: relative;
-    padding:30px 0;
+    padding:50px;
+    border-top: 1px solid #b8b8b8;
     border-bottom: 1px solid #b8b8b8;
   }
   .heading_three{
    position: relative;
+   padding: 50px;
    background-color: rgba(2,32,2,.9);
    text-align: center;
   }
   .heading_one_content , .heading_two_content , .heading_three_content {
     color:#fff;
+    font-weight: unset;
   }
  
-  .heading_one img , .heading_two img  {
+  .heading_one img , .heading_two img   {
+    max-width: 480px;
     width:100%;
-    padding:0 4rem;
+  }
+  .heading_three img {
+    max-width: 786px;
+    width:100%;
+    margin-bottom: 50px;
   }
 
-   .heading_three img {
-    max-width:800px;
-     width:100%;
-    padding:3rem;
-   }
+ 
 
   .heading_one_content {
-    padding:100px 120px 50px 50px; 
+    padding: 30px 100px 50px 50px;
+    color:#fff;
   }
   .heading_one_content img {
     width:32% !important;
@@ -261,70 +378,237 @@ body {
    
   }
   .heading_two_content {
-    padding:70px 0px 34px 124px;
+    padding: 50px 100px 50px 50px;
     color:#fff;
   }
   .heading_three_content {
     padding:0 100px 30px 100px;
     color:#fff;
   }
-  .heading_one_content h3 , .heading_two_content h3 ,.heading_three_content h3 {
-    line-height: 2.5rem;
+  .heading_one_content h2 , .heading_two_content h2 ,.heading_three_content h2  {
+    margin-bottom: 30px;
+    font-weight: unset !important;
     text-shadow: 1px 1px 10px rgba(251,226,0,.92);
+    text-align: center;
 
 
     /* background: -webkit-linear-gradient(#FDDA5C,#F38F09);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; */
   }
-
-
-  @media (max-width: 1200px) {
-    .heading_one_content , .heading_two_content , .heading_three_content {
-      padding:20px;
-    }
-    .logo{
-      
-    }
-    .header_content {
-      left:17px !important;
-    }
-    .header_signin .signin_text {
-      padding-right:4px !important;
-    }
+  .heading_one_content p, .heading_two_content p ,.heading_three_content p  , .footer_content_1 p{
+    line-height: 2pc;
+    font-size: large;
   }
-  @media (max-width:400px) { 
-    .heading_one_content , .heading_two_content , .heading_three_content {
-      padding:20px;
-    }
-    .heading_one_content p , .heading_two_content p , .heading_three_content p {
-      font-size: 13px;
-    }
-    .logo{
-      /* margin-left:15px !important; */
-    
-      
-    }
-    .change_lang_icon span , .change_lang_icon i {
-      padding:0 !important;
-    }
-   
-    .profile {
-      padding:10px;
-    }
-  }
-  
+
+.topup .v-input--center-affix .v-input__prepend, .v-input--center-affix .v-input__append {
+  background-color: #fff;
+  margin:0;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  padding:5px;
+}
+.lang_item {
+  display: contents;
+  position: relative;
+  left:20px;
+}
 .lang_svg {
-  display: flex;
+  display: inline-flex;
   position: relative;
   top:16px;
 }
-.lang_svg svg {
-  width:20%;
-}
-.lang_svg span {
-  padding:8px 0 0 15px;
+.lang_item svg {
+  width:30px;
+  height: 30px;
   color:#fff;
+  position: relative;
+  top:10px;
+}
+.lang_item span {
+position: relative;
+padding-left:10px;
+color:#fff;
+}
+.lang_item .el-dropdown  {
+display: inline-flex;
+position: relative;
+right:15px;
+top:6px;
+}
+.logo {
+  width:59px;
+  position: relative;
+  top:5px;
+}
+.bg_green {
+  background-color: rgba(8,72,16,.5);
+  padding:35px 20px;
+}
+.topup .v-banner {
+ 
+  border-radius: 9px !important;
+    background-color: unset;
+    padding-inline: 18px;
+}
+.topup .v-banner--density-default.v-banner--two-line {
+  padding:8px;
+}
+.topup_submit_btn , .withdraw_submit_btn {
+  width: 100%;
+  background-color: #ffc107 !important;
+  border:1px solid #fff;
+  font-weight: bold;
+  min-height: 43px !important;
+}.deposit_inputs .v-input--density-default .v-field__input {
+  min-height: 43px !important;
+}
+
+.deposit_inputs .v-text-field .v-field--no-label input {
+  height: 13px !important;
+}
+.profile_btns .show_only_deposit {
+  padding: 18px 10px;
+  margin-top: 8px;
+  background-color: #ffc107;
+  color: #000;
+  height: unset !important;
+  font-weight: bold;
+  border: 0;
+  cursor: unset;
+}
+
+.profile_btns .show_only_deposit:active {
+  border: 0 !important;
+}
+.topup .v-label {
+ width:100% !important;
+ display: unset;
+}
+.topup .v-card--link {
+  background-color: unset;
+}
+
+.bank_bgColor {
+  background-color: #198754 !important;
+    border: 2px solid #fff !important;
+    border-radius: 9px !important;
+    color: #fff !important;
+}
+.copy_icon {
+  width:20px !important;
+  position: relative;
+  top:10px;
+}
+.bank_bgColor svg {
+  color:#fff;
+  width:20px !important;
+  position: relative;
+  top:10px;
+}
+.errordialog .v-icon {
+  color:red !important;
+  font-size: 70px;
+}
+.logindialog , .errordialog {
+  text-align: center;
+}
+.logindialog p , .errordialog p {
+  text-align: center;
+}
+.logindialog .v-icon {
+  color:#008f32 !important;
+  font-size: 70px;
+}
+.logindialog .v-btn , .errordialog .v-btn {
+  background-image: linear-gradient(240deg,#3f9a02 30%,#0a811a 70%)!important;
+  width:auto !important;
+  color:#fff !important;
+}
+.v-messages__message {
+  text-align: left;
+  line-height: 21px;
+}
+.topup h6 {
+  padding-top:10px;
+  padding-left:10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width:800px) {
+  .responsive_hide {
+    display: none !important;
+  }
+  .topup .v-btn__content {
+    display: block !important;
+    text-align: -webkit-center;
+    padding:5px;
+  }
+  .bank_card .el-col-8 {
+    display:contents !important;
+    width:100%;
+   
+  }
+  .bank_card .bank_detail {
+    margin:10px auto !important; 
+  }
+  .change_password_btn , .logout_btn {
+    font-size:12px !important;
+    margin:10px 0 !important;
+  }
+  .logo {
+    margin:0 20px !important;
+    width:65px !important;
+  }
+  .nav-item {
+    margin:10px 5px 5px 5px !important;
+  }
+  .lang_profile_items .v-input__control {
+    width:120px !important;
+  }
+  .nav-bar .login_profile {
+    position: relative;
+    left:20px !important;
+  }
+ 
+
 }
 
   @media (max-width:790px) {
@@ -341,61 +625,65 @@ body {
     .lang_svg svg {
       width:34px;
     }
-    .login_profile {
+ 
+    .lang_profile_items .v-input__control {
+      width:100px !important;
       position: relative;
-      right:50px;
-      top:6px !important;
+      right:34px;
+
     }
-    .logo {
-      left:50px;
+    .game_section {
+      padding:0 !important;
     }
    
+  }
+  @media (max-width:768px) { 
+    .heading_one_content , .heading_two_content , .heading_three_content {
+      padding:20px;
+    }
+    .heading_one_content p , .heading_two_content p , .heading_three_content p {
+      font-size: 13px;
+    }
+  
+    .change_lang_icon span , .change_lang_icon i {
+      padding:0 !important;
+    }
+   
+    .footer_content_1 {
+      padding:0 !important;
+    }
   }
   @media (max-width:300px) {
     .profile_img {
       width:150px !important;
       height: 150px !important;
       bottom:81% !important;
+      left:16% !important;
     }
     .logo {
-      left:20px !important;
+      left:0px !important;
       top:4px;
     }
     .lang_svg svg  {
       width:28px !important;
     }
-    .login_profile {
-      width:28px !important;
-    }
+  
     .footer_content_1 img {
       width:170px !important; 
     }
     .footer_content_2 .wavemoney_icon img {
       width:200px !important;
     }
+    .lang_profile_items .v-input__control {
+      width:100px !important;
+      position: relative;
+      right:35px;
+
+    }
+    .nav-bar .login_profile {
+      right:30px !important;
+    }
   }
-  @media (max-width:800px) {
-    
-    .bank_card .el-col-8 {
-      display:contents !important;
-      width:100%;
-     
-    }
-    .bank_card .bank_detail {
-      margin:10px auto !important; 
-    }
-    .change_password_btn , .logout_btn {
-      font-size:12px !important;
-      margin:10px 0 !important;
-    }
-    .logo {
-      margin:0 20px !important;
-      width:65px !important;
-    }
-    .nav-item {
-      margin:10px 5px 5px 5px !important;
-    }
-   
   
-  }
+
   

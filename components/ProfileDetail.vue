@@ -4,19 +4,19 @@
       
       <img class="profile_img" src="/images/profile_img.png" alt="">
       <div class="profile_userDetail">
-          <h6>Name</h6>
-          <p>ID - 100022</p>
-          <h5>120000 MMK</h5>
+          <h6>{{profile.name }}</h6>
+          <p>ID - {{ profile.phone }}</p>
+          <h5>{{ profile.balance }} MMK</h5>
       </div>
       <div class="user_logout">
-          <el-button class="change_password_btn">
+          <v-btn size="large" class="change_password_btn">
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="key" class="svg-inline--fa fa-key me-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"></path></svg>
               <span>Change Password</span> 
-          </el-button>
-          <el-button class="logout_btn" @click="Logout()">
+          </v-btn>
+          <v-btn size="large" class="logout_btn" @click="Logout()">
               <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right-from-bracket" class="svg-inline--fa fa-arrow-right-from-bracket me-1" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z"></path></svg>
              <span>Logout</span> 
-          </el-button>
+          </v-btn>
 
       </div>
              
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-
+import { useStore } from '~/store/state';
     export default {
 
         components: {
@@ -36,17 +36,20 @@
         },
         mounted() {
             let token = localStorage.getItem("token");
+            console.log(token,'token')
             if(token) {
-                this.$axios
-                .get("profile", {
-                headers: {
+                $fetch('/profile', {
+                 headers: {
                     Authorization: "Bearer " + token,
                 },
+                    method:'post',
+                    baseURL:'https://backend.shalpouts.com/api'
                 })
                 .then((response) => {
-                    this.profile = response.data.data
-                    this.$store.commit("profile", this.profile); 
-                    console.log(response,'profile api')
+                    this.profile = response.data
+                   
+                    this.store.profile(this.profile)
+                    console.log(response.data,'profile api')
                     
                 })
             }
@@ -54,49 +57,42 @@
         },
         data() {
             return {
-                title: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D'
+                profile:'',
+                store:useStore(),
+                title: ''
             }
         },
-         head() {
-             var lang = localStorage.getItem('locale')
-             if(lang == 'en') {
-                 var url = 'https://www.bkk2d.com/sitemap/'
-             }else {
-                 var url = 'https://www.bkk2d.com/sitemap/' 
-             }
-        return {
-            title: this.title,
-           meta: [
-                {
-                    hid: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D',
-                    name: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D',
-                    content: 'ค้นหาลิงก์และรับหน้าเว็บไซต์ทั้งหมดโดยตรงจากแผนผังเว็บไซต์'
-                },
-
-            ],
-            link: [
-                { rel: 'icon', type: 'image/x-icon', href: '/images/bkk2d.png', defer: true },
-                { rel: 'canonical', href:url }
-            ]
-        }
-      },
+        
       methods: {
+        LogoutPre() {
+            
+        },
         Logout() {
             let token = localStorage.getItem("token");
     
             console.log(token,'token,,,,')
     if (token) {
-      this.$axios
-        .post("logout", {
-          headers: {
-            Authorization: " Bearer " + token,
-          },
-        })
+    //   this.$axios
+    //     .post("logout", {
+    //       headers: {
+    //         Authorization: " Bearer " + token,
+    //       },
+    //     })
+        
+            $fetch('/logout', {
+                 headers: {
+                    Authorization: "Bearer " + token,
+                },
+                    method:'post',
+                    baseURL:'https://backend.shalpouts.com/api'
+                })
         .then((response) => {
-            console.log(response)
-            if(response.data.message == 'success') {
-                this.$store.commit("logOut");
-                this.$router.push(`/?lang=${this.$store.state.locale}`);
+            console.log(response.status)
+            if(response.status == 'success') {
+
+                let store = useStore()
+                store.logOut();
+                this.$router.push('/');
             }
         })
        
@@ -185,6 +181,7 @@
     .change_password_btn {
         color:#fff;
         font-size: 17px;
+        margin-right: 10px !important;
         background-color: orange;
         border:0;
     }

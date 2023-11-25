@@ -1,12 +1,13 @@
 <template>
-    <main class="withdraw">
+    <main class="topup">
 
 
 
-        <el-row class="profile_btns">
-            <el-col :span="8">
-                <nuxt-link type="text" to="/topup">
-                    <el-button class="deposit_btn">
+        <v-row class="profile_btns">
+           
+            <v-col cols="4" lg="4">
+                <nuxt-link type="text" to="/withdraw">
+                    <v-btn size="large" class="withdrawal_btn">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="wallet"
                             class="svg-inline--fa fa-wallet " role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512">
@@ -15,12 +16,13 @@
                             </path>
                         </svg>
                         <h6>Deposit</h6>
-                    </el-button>
+                       
+                    </v-btn>
                 </nuxt-link>
-            </el-col>
-            <el-col :span="8">
-                <nuxt-link type="text" to="/withdraw">
-                    <el-button class="withdrawal_btn">
+            </v-col>
+            <v-col cols="4" lg="4">
+                <nuxt-link type="text" to="/deposite">
+                    <v-btn size="large" class="deposit_btn">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="right-from-bracket"
                             class="svg-inline--fa fa-right-from-bracket " role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512">
@@ -29,12 +31,12 @@
                             </path>
                         </svg>
                         <h6>Withdraw</h6>
-                    </el-button>
+                    </v-btn>
                 </nuxt-link>
-            </el-col>
-            <el-col :span="8">
+            </v-col>
+            <v-col cols="4" lg="4">
                 <nuxt-link type="text" to="/history">
-                    <el-button class="history_btn">
+                    <v-btn size="large" class="history_btn">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock-rotate-left"
                             class="svg-inline--fa fa-clock-rotate-left " role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512">
@@ -43,136 +45,59 @@
                             </path>
                         </svg>
                         <h6>History</h6>
-                    </el-button>
+                    </v-btn>
                 </nuxt-link>
-            </el-col>
-            <!-- <div style="padding:0 5px">
-                <el-button type="text" class="show_only_deposit">
-                    <h4>Deposit</h4>
-                </el-button>
-            </div> -->
+            </v-col>
+            <v-row style="width:100%;">
+                <v-col>
+                    <v-btn width="98%" size="large" type="text" class="withdraw_submit_btn">
+                    <span>Withdraw</span>
+                </v-btn>
+                </v-col>
+                
+            </v-row>
 
-        </el-row>
-        <el-card v-if="active == 1" class="bank_card">
-            <el-row v-for="bank in banks" :key="bank">
-                <div class="" @click="bankOff(bank.type)">
-                    <el-radio class="bank_detail" v-model="selectBank" :label="bank">
-                        <el-col :span="20" style="text-align: left;">
-                            <div class="">
-                                <img :src="bank.bank_image" alt class="" />
-                                <span class="bank_name">{{ bank.type }}</span>
+        </v-row>
+        <div class="bg_green">
+        <v-form ref="form" @submit.prevent="WithdrawSubmit" v-model="valid" lazy-validation>
 
-                            </div>
-                        </el-col>
-                        <el-col :span="4">
-                            <div class="check_icon_btn">
-                                <i v-if="selectBank.type == bank.type" class="el-icon-success"></i>
-                                <i v-else class="el-icon-remove-outline"></i>
-                            </div>
-                        </el-col>
-                    </el-radio>
-                </div>
-            </el-row>
-            <el-button class="selectBank_btn" @click="selectBank_btn('ruleForm')" type="success">Withdraw</el-button>
-        </el-card>
+            <v-row class="deposit_inputs">
 
-        <el-card class="bankinfo" v-if="active == 2">
-            <img :src="selectBank.bank_image" alt="" style="margin-bottom:20px;">
-        
-            <el-form @submit.native.prevent :model="ruleForm" ref="ruleForm" class="demo-ruleForm">
+                <v-col cols="12" lg="3">
 
-                <p style="text-align: left;">{{ $t('Account Name') }}</p>
-                <el-form-item prop="account_name" :rules="[{ required: true, message: $t('account_name_required') }]"
-                    class="tran_input">
+                    <v-text-field :height="20" variant="solo" v-model="withdraw_amount" placeholder="Withdraw Amount"
+                        :rules="[v => !!v || 'Withdraw amount is required']" required></v-text-field>
+                </v-col>
+                <v-col cols="12" lg="3">
+                    <v-text-field variant="solo" v-model="account_number" placeholder="Bank Account Number"
+                        :rules="[v => !!v || 'Bank Account Number is required']" required></v-text-field>
+                </v-col>
 
-                    <el-input ref="test" type="text" :placeholder="$t('Enter Account Name')"
-                        v-model="ruleForm.account_name"></el-input>
-                </el-form-item>
-                <p style="text-align: left;">{{ $t('Account Number') }}</p>
-                <el-form-item prop="account_number" :rules="[{ required: true, message: $t('account_number_required') }]"
-                    class="tran_input">
-
-                    <el-input ref="test" type="text" :placeholder="$t('Enter Account Number')"
-                        v-model="ruleForm.account_number"></el-input>
-                </el-form-item>
-                <p style="text-align: left;">{{ $t('Withdraw Amount') }}</p>
-                <el-form-item prop="tran_amount" :rules="[{ required: true, message: $t('amount_required') }]"
-                    class="tran_input">
-
-                    <el-input ref="test" type="text" :placeholder="$t('Enter transferred amount')"
-                        v-model="ruleForm.tran_amount"></el-input>
-                </el-form-item>
+                <v-col cols="12" lg="3">
+                    <v-text-field variant="solo" v-model="account_name" placeholder="Bank Account Name"
+                        :rules="[v => !!v || 'Bank Account Name is required']" required></v-text-field>
+                </v-col>
+                <v-col cols="12" lg="3">
+                    <v-text-field variant="solo" v-model="bank_name" placeholder="Bank  Name"
+                        :rules="[v => !!v || 'Bank  Name is required']" required></v-text-field>
+                </v-col>
+                <v-col cols="12" lg="3">
+                    <v-btn class="withdraw_submit_btn"  :disabled="loading"
+        :loading="loading"   @click="WithdrawSubmit" type="success">{{ $t('confirm') }}</v-btn>
+                </v-col>
 
 
 
-
-
-                <el-row>
-                    <el-radio-group v-model="radio_amount" size="medium" class="swipe_button1" @change="select_amount">
-                        <el-radio-button label="5000">5,000</el-radio-button>
-                        <el-radio-button label="10000">10,000</el-radio-button>
-                        <el-radio-button label="50000">50,000</el-radio-button>
-                        <el-radio-button label="100000">100,000</el-radio-button>
-                        <el-radio-button label="200000">200,000</el-radio-button>
-                        <el-radio-button label="500000">500,000</el-radio-button>
-                    </el-radio-group>
-                </el-row>
-
-
-            </el-form>
-            <div class="btn_group">
-                <el-button class="cancel_btn" @click="cancel()" type="info">Back</el-button>
-                <el-button class="selectBank_btn" @click="WithdrawSubmit('ruleForm')" type="success">Confirm</el-button>
-            </div>
-           
-        </el-card>
-
-        <!--       
-            <el-row class="deposit_inputs">
-                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px"
-                    class="demo-ruleForm">
-                    <el-col :span="5">
-                        <el-form-item prop="phone" :rules="[{ required: true, message: 'Please Enter Phone Number' }]">
-                            <el-input label="Phone Number" type="phone" placeholder="Phone Number" v-model="ruleForm.phone"
-                                autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="5">
-                        <el-form-item prop="bank_name" :rules="[{ required: true, message: 'Please Enter Bank Name' }]">
-                            <el-input label="" type="text" placeholder="Enter Bank Name" v-model="ruleForm.bank_name"
-                                autocomplete="off"> </el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="5">
-                        <el-form-item prop="amount" :rules="[{ required: true, message: 'Please Enter Amount' }]">
-                            <el-input label="" type="text" placeholder="Enter Amount" v-model="ruleForm.amount"
-                                autocomplete="off">
-                            </el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="5">
-                        <el-form-item prop="tran_number"
-                            :rules="[{ required: true, message: 'Please Enter Transaction Number' }]">
-                            <el-input label="" type="text" placeholder="Enter Transaction Number"
-                                v-model="ruleForm.tran_number" autocomplete="off"> </el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-button class="deposit_btn" :loading="login_loading" @click="slipUpload('ruleForm')"
-                         type="success">Confirm</el-button>
-                    </el-col>
-
-                </el-form>
-               
-            </el-row> -->
-
-
+            </v-row>
+        </v-form>
+        </div>
 
 
     </main>
 </template>
 
 <script>
+import { useStore } from '~/store/state';
 // import ProfileDetail from '~/components/ProfileDetail';
 export default {
 
@@ -181,58 +106,51 @@ export default {
         // TheFooter
     },
     mounted() {
+        console.log(this.radios, 'readi')
         let token = localStorage.getItem("token");
         if (token) {
-            this.$axios
-                .get("profile", {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    },
-                })
+            $fetch('/profile', {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                method: 'post',
+                baseURL: 'https://backend.shalpouts.com/api'
+            })
                 .then((response) => {
-                    this.profile = response.data.data;
-                    this.$store.commit("profile", this.profile)
-                    console.log(response, 'profile api')
+                    this.profile = response.data;
+                    console.log(this.profile, 'profile api')
+                    let store = useStore()
+                    store.profile(this.profile)
 
                 })
-            this.$axios
-                .get("bank_api", {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    },
-                })
-                .then((response) => {
-                    console.log(response, 'bank api')
-                    this.banks = response.data.data
 
-                })
         }
 
     },
+
     data() {
         return {
+            loading:false,
+            active: false,
+            isSet: false,
+            state: useStore(),
             active: 1,
-            percentage: 0,
 
-            radio_amount: '',
-            title: 'Deposite',
+            title: 'Withdraw',
+            valid: false,
             selectBank: '',
             banks: [],
-            ruleForm: {
-                account_name: '',
-                account_number: '',
-                tran_amount: '',
-            },
-
+            phone: '',
+            account_name:'',
+            account_number:"",
+            bank_name: '',
+            withdraw_amount: '',
+  
         }
     },
     head() {
         var lang = localStorage.getItem('locale')
-        if (lang == 'en') {
-            var url = 'https://www.bkk2d.com/sitemap/'
-        } else {
-            var url = 'https://www.bkk2d.com/sitemap/'
-        }
+
         return {
             title: this.title,
             meta: [
@@ -243,26 +161,15 @@ export default {
                 },
 
             ],
-            link: [
-                { rel: 'icon', type: 'image/x-icon', href: '/images/bkk2d.png', defer: true },
-                { rel: 'canonical', href: url }
-            ]
+            
         }
     },
     methods: {
-        selectBank_btn() {
-            if(this.selectBank) {
-                if (this.active++ > 1) this.active = 2;
-            }else {
-                this.$message({
-                showClose: true,
-                message: "Please Select A Bank",
-                type: "warning",
-                duration: 2000,
-                });
-            }
-            
+        toggleIsSet(index) {
+
+            // this.isSet = !this.isSet
         },
+    
         select_amount() {
             this.ruleForm.tran_amount = ''
             this.ruleForm.tran_amount = this.radio_amount
@@ -291,80 +198,114 @@ export default {
                 alert("Oops, unable to copy");
             }
             testingCodeToCopy.setAttribute("type", "hidden");
-            if(process.client){
-            window.getSelection().removeAllRanges();
-            }
+            // window.getSelection().removeAllRanges();
         },
         cancel() {
             if (this.active-- > 1) this.active = 1;
         },
-        WithdrawSubmit(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.submitted = true;
-                    let token = localStorage.getItem("token");
-                    let profile = JSON.parse(localStorage.getItem('profile'))
-                    var data_deposit = {
+        async WithdrawSubmit() {
+            const { valid } = await this.$refs.form.validate()
 
-                        phone:profile.phone,
-                        account_name:this.ruleForm.account_name,
-                        account_number:this.ruleForm.account_number,
-                        bank_name: this.selectBank.type,
-                        amount: this.ruleForm.tran_amount,
+            if (valid) {
 
-                    }
-                    console.log(data_deposit, '?????????/')
+                let token = localStorage.getItem("token");
+                let profile = JSON.parse(localStorage.getItem('profile'))
+                var data_deposit = {
 
-                    if (token) {
-                        this.$axios
-                            .post("wallet_withdraw", data_deposit, {
-                                headers: {
-                                    Authorization: "Bearer " + token,
-                                },
-                            })
+                    phone: profile.phone,
+                    bank_name: this.bank_name,
+                    account_name: this.account_name,
+                    amount: this.withdraw_amount,
+                    account_number: this.account_number,
+
+                }
+                this.loading = true
+                console.log(data_deposit, '/////')
+                if (token) {
+                        $fetch('/wallet_withdraw', {
+                            params: {
+                                phone: profile.phone,
+                                bank_name: this.bank_name,
+                                account_name: this.account_name,
+                                amount: this.withdraw_amount,
+                                account_number: this.account_number,
+                            },
+                            headers: {
+                                Authorization: "Bearer " + token,
+                            },
+                            method: 'post',
+                            baseURL: 'https://backend.shalpouts.com/api'
+                        })
 
 
                             .then((response) => {
 
-                                console.log(response, 'register success')
-                                if (response.data.status == 'success') {
-                                    this.$message({
-                                    showClose: true,
-                                    message: "Topup Success",
-                                    type: "success",
-                                    duration: 2000,
-                                    });
-                                    if (this.active-- > 1) this.active = 1;
-                                    this.selectBank = '';
+                                console.log(response, 'wallet_withdraw success')
+                                if (response.status == 'success') {
+                                    this.loading = false
+                                    this.$snackbar.add({
+                                        type: 'success',
+                                        text: 'Wallet withdraw Success'
+                                    })
+
+
+                                  
+                                } else {
+                                    this.loading = false
+                                    this.$snackbar.add({
+                                        type: 'error',
+                                        text: response.message
+                                    })
                                 }
 
 
                             })
                             .catch((error) => {
-                                this.$message({
-                                    showClose: true,
-                                    message: error,
-                                    type: "warning",
-                                    duration: 2000,
-                                });
+                                this.loading = false
+                                this.$snackbar.add({
+                                    type: 'error',
+                                    text: error
+                                })
                             });
-                    }
+                   
 
-                    //
-
-                    //if (this.active++ > 2) this.active = 0;
-                } else {
-                    console.log("error submit!!");
-                    return false;
                 }
-            })
-        },
 
+                //
+
+                //if (this.active++ > 2) this.active = 0;
+            } else {
+                console.log("error submit!!");
+                return false;
+            }
+
+
+        }
     },
 }
 </script>
 
 <style >
+.is-active {
+    color: #fff;
+}
+
+
+
+.v-radio-group>.v-input__control {
+    background-color: #ddd;
+    border-radius: 9px;
+}
+
+.v-selection-control__wrapper {
+    display: none;
+}
+
+.v-selection-control .v-label {
+    opacity: 1;
+    color: blueviolet;
+}
+
 .bank_detail {
     align-items: center;
     background-color: #ddd;
@@ -461,7 +402,7 @@ export default {
 }
 
 .profile_btns {
-    padding: 20px 0;
+    padding-top:20px;
     text-align: center;
 }
 
@@ -484,38 +425,23 @@ export default {
     margin: 0;
 }
 
-.profile_btns .show_only_deposit {
-    width: 100% !important;
-    padding: 12px 10px;
-    margin-top: 8px;
-    background-color: #ffc107;
-    color: #000;
-    font-weight: bold;
-    border: 0;
-    cursor: unset;
-}
 
-.profile_btns .show_only_deposit:active {
-    border: 0 !important;
-}
 
-.profile_btns .deposit_btn {
-    background-color: #fff;
-    color: #000;
-    border: 0;
-}
-.withdraw .profile_btns .withdrawal_btn {
+.topup .profile_btns .deposit_btn {
+    height: 63px;
     background-color: #ffc107;
     color: #000;
     border: 0;
 }
 
-.deposit_inputs .el-col {
-    margin-right: 10px;
-}
 
-.deposit_btn {
+
+.deposit_btn,
+.withdrawal_btn,
+.history_btn,
+.topup_btn {
     width: 100% !important;
+    height: 63px !important;
 }
 
 .bank_card {
@@ -524,18 +450,7 @@ export default {
     margin: 0 auto;
 }
 
-.selectBank_btn {
-    position: relative;
-    width: 100% !important;
-    padding: 20px 10px;
-    margin-top: 8px;
-    background-color: #ffc107;
-    color: #000;
-    font-weight: bold;
-    border: 0;
-    cursor: pointer;
 
-}
 
 .bankinfo {
     position: relative;
@@ -551,14 +466,7 @@ export default {
     display: block;
 }
 
-.bankinfo .swipe_button1 .el-radio-button__inner {
-    width: 100%;
-    border-radius: 5px;
-    padding: 10px;
-    color: #fff;
-    border: 1px solid #b8b8b8 !important;
-    background-color: #393939;
-}
+
 
 .bankinfo .swipe_button1 {
     margin-top: 20px;
@@ -569,13 +477,15 @@ export default {
     padding: 0 3px;
 }
 
-.bankinfo .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-    background-color: #05a11f !important;
-    color: #fff;
-    font-weight: bold;
-    box-shadow: unset;
-    border: 0;
+.topup .v-img__img--cover {
+    background-size: cover;
+    object-fit: unset;
 }
+
+.topup .v-avatar {
+    border-radius: 9px;
+}
+
 
 .copy_bank_account {
     display: -webkit-box;
@@ -594,13 +504,13 @@ export default {
 .copy_bank_account .el-col-6 {
     padding-top: 10px;
 }
+
 .btn_group {
-    margin-top:30px;
+    margin-top: 30px;
 }
+
 .btn_group .el-button {
-    width:47% !important;
-    padding:20px 10px !important;
+    width: 47% !important;
+    padding: 20px 10px !important;
 }
-
-
 </style>

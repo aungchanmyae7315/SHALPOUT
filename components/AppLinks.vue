@@ -1,27 +1,14 @@
 <template>
    <el-row>
 
-        <ul class="nav-list">
-   
-        <li class="nav-item home_nav">
-          <nuxt-link to="/">Home</nuxt-link>
-        </li>
- 
-        <li class="nav-item">  <nuxt-link to="/">Home</nuxt-link></li>
-        <li v-if="!this.$store.state.isLoggedIn" class="nav-item">  <nuxt-link to="/register/">Register</nuxt-link></li>
-        <li v-if="this.$store.state.isLoggedIn" class="nav-item">  <nuxt-link to="/promotion/">Promotion</nuxt-link></li>
-        <li class="nav-item">  <nuxt-link to="/games/">Games</nuxt-link></li>
-        <li v-if="this.$store.state.isLoggedIn" class="nav-item">  <nuxt-link to="/topup/">Deposite</nuxt-link></li>
-        <li v-if="this.$store.state.isLoggedIn" class="nav-item">  <nuxt-link to="/withdraw/">Withdraw</nuxt-link></li>
-        <li class="nav-item">  <nuxt-link to="/Contact/">Contact</nuxt-link></li>
-     
-   
-        </ul>
+        
     
   
 </el-row>
 </template>
 <script >
+ import { useStore } from '~/store/state';
+  
     export default {
 
 
@@ -42,7 +29,8 @@
     },
     data() {
         return {
-            title: this.$t('home_title'),
+            store : useStore(),
+           
 
            
         }
@@ -56,13 +44,7 @@
         }
         return {
             title: this.title,
-            meta: [
-                {
-                    hid: this.$t('home_title'),
-                    name: this.$t('home_title'),
-                    content: this.$t('home_description'),
-                },
-            ],
+           
             link: [
                 { rel: 'icon', type: 'image/x-icon', href: '/images/bkk2d.png', defer: true },
                 { rel: 'canonical', href: url, },
@@ -72,13 +54,13 @@
     },
     methods: {
         updateIsLoggedIn() {
-        this.$store.commit("updateIsLoggedIn", this.hasUserInfo());
+          this.store.updateIsLoggedIn(this.hasUserInfo());
         },
         hasUserInfo() {
         return Boolean(localStorage.getItem("userInfo"));
         },
         updateLang() {
-            this.$store.commit("updateLang", this.hasLang());
+            this.store.updateLang(this.hasLang());
         },
         hasLang() {
             return Boolean(localStorage.getItem("locale"));
@@ -108,12 +90,7 @@
 }
 
 
-.nav-item a:active {
-  color: #fcd354;
-  transition: 0.5s ease;
-  background-color: rgba(5,178,34,.5)!important;
-  padding:20px;
-}
+
 
 @media (min-width: 769px) {
   .nav-list {

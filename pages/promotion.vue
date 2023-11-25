@@ -1,6 +1,7 @@
 <template>
     <section class="">
         <h1>Promotion</h1>
+        {{ token,'pdd' }}
     </section>
 </template>
 
@@ -12,10 +13,13 @@
 
         components: {
             // TheGames
+         
         },
+        
         data() {
             return {
-                title: 'Shalpout Promotion'
+                title: 'Shalpout Promotion',
+                token:localStorage.getItem('token')
             }
         },
          head() {

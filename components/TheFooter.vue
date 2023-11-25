@@ -1,15 +1,14 @@
 <template>
-      
-        <div class="row copyright ">
-            <div class="col-md-6" >
+      <v-row style="text-align: -webkit-center;">
+            <v-col cols="12" lg="6" >
                 <div class="footer_content_1">
                     <img src="/images/footer/footer_logo.png" alt="">
-                    <h3>Payment systems available at Shal Pout Entertainment</h3>
-                    <p>1kyat = 1unit for Myanmar players We Accepted Kpay, Wavepay, CBpay, AYApay and you can also play with KBZ, CB, AYA Banking For players from Thailand, 1bath = 80units You can play at any Thai banks</p>
+                    <h2>{{$t('titleFive') }}</h2>
+                    <p>{{$t('desFive') }}</p>
 
                 </div>
-            </div>
-            <div class="col-md-6" >
+            </v-col>
+            <v-col cols="12" lg="6">
                 <div class="footer_content_2" >
                     <div class="wavemoney_icon">
                         <img  src="/images/footer/wavemoney.png" alt="">
@@ -28,8 +27,11 @@
 
                    </ul>
                 </div>
-            </div>
-            <div style="text-align: center;color:#fff;width:100%;padding:20px 0;">
+            </v-col>
+        </v-row>
+        <div class=" copyright ">
+         
+            <div style="text-align: center;color:#fff;width:100%;padding-top:20px">
                 <p style="text-align: center;">Copyright © 2023, SHAL POUT.</p>
             </div>
             
@@ -48,23 +50,18 @@
 
 </script>
 <style scoped>
-    .footer_heading{
-        max-width: 724px;
-        margin:0 auto;
-        color:#fff;
-        padding:50px 15px 30px 15px;
-        
-    }
+   
+  
     .footer_1{
         text-align: center;
         background-image: url(~/imagesgame-bg.jpg);
         background-repeat: no-repeat;
         background-size: 100% 100%;
     }
-    .footer_heading h3 {
-          background: -webkit-linear-gradient(#FDDA5C,#F38F09);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    .footer_content_1 h2 {
+        padding-top:20px;
+        margin-bottom: 40px;
+        font-weight: unset  !important;
     }
     .footer_heading span{
         text-align: center;
@@ -74,7 +71,7 @@
         padding:0 30px;
     }
     .footer_content_1 img {
-        width:350px;
+        width:240px;
     }
     .footer_content_1 p {
         text-align: center;
@@ -107,7 +104,7 @@
     .copyright {
     position: relative;
     border-top:1px solid #b8b8b8;
-    padding:30px 0 10px 0;
+    padding:20px;
     margin:0;
     text-align: -webkit-center;
     background-color: #002E02;

@@ -13,46 +13,42 @@
 </template>
 
 <script>
+import { useStore } from '~/store/state';
     import ProfileDetail from '~/components/ProfileDetail';
-    import WithdrawItem from '~/components/WithdrawItem';
+    import TopupItem from '~/components/TopupItem';
      import TheFooter from '~/components/TheFooter'
     export default {
 
         components: {
             ProfileDetail,
-            WithdrawItem,
+            TopupItem,
             TheFooter
+        },
+        mounted() {
+            this.updateIsLoggedIn();
+            this.updateLang();
         },
         data() {
             return {
-                title: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D'
+               store:useStore()
             }
         },
-         head() {
-             var lang = localStorage.getItem('locale')
-             if(lang == 'en') {
-                 var url = 'https://www.bkk2d.com/sitemap/'
-             }else {
-                 var url = 'https://www.bkk2d.com/sitemap/' 
-             }
-        return {
-            title: this.title,
-           meta: [
-                {
-                    hid: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D',
-                    name: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D',
-                    content: 'ค้นหาลิงก์และรับหน้าเว็บไซต์ทั้งหมดโดยตรงจากแผนผังเว็บไซต์'
-                },
-
-            ],
-            link: [
-                { rel: 'icon', type: 'image/x-icon', href: '/images/bkk2d.png', defer: true },
-                { rel: 'canonical', href:url }
-            ]
-        }
-      },
+   
       methods: {
-        
+        updateIsLoggedIn() {
+                    this.store.updateIsLoggedIn(this.hasUserInfo());
+                },
+                hasUserInfo() {
+                return Boolean(localStorage.getItem("userInfo"));
+                },
+                updateLang() {
+                console.log(this.store,'lee par pal')
+                    this.store.updateLang(this.hasLang());
+                },
+                hasLang() {
+                    return Boolean(localStorage.getItem("locale"));
+                },
+      
       
     },
     }
@@ -129,7 +125,7 @@
         border:0 !important;
     }
     .profile_btns .deposit_btn {
-        background-color: #fff;
+        background-color: #ffc107;
         color:#000;
         border:0;
     }

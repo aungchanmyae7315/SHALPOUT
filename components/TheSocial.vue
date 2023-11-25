@@ -59,7 +59,7 @@
     }
     .social_bar ul li {
         list-style: none;
-        padding:10px 30px;
+        padding:0px 30px;
         display: inline-block;
     }
     .social_bar ul li svg  {

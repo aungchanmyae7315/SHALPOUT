@@ -1,123 +1,186 @@
 i
 <template>
   <div class="register_form">
-    <h1>Fill Information</h1>
-    <el-form v-if="active === 1" :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px"
-      class="demo-ruleForm">
-      <el-form-item prop="user_name" :rules="[{ required: true, message:'Please Enter User Name' }]">
+    
+    <v-form
+      ref="form"
+      @submit.prevent="EnterPhone"
+      v-model="valid" 
+      lazy-validation
+      v-if="active === 1"
+      
+    >   
+    <h1>{{ $t('အချက်အလက်ဖြည့်ပါ') }}</h1>
+     <p>{{ $t('loginName') }}</p>
+         <v-text-field
+          variant="solo"
+          v-model="user_name"
+          :placeholder="$t('loginName')" 
+          :rules="[v => !!v || 'User Name is required']"
+          required
+          ></v-text-field>
+          <p>{{ $t('loginPhone') }}</p>
+          <v-text-field
+          variant="solo"
+          v-model="phone"
+          :placeholder="$t('loginPhone')" 
+          :rules="[v => !!v || 'Phone Number is required']"
+          required
+          ></v-text-field>
+        <!-- <el-form-item prop="user_name" :rules="[{ required: true, message:'Please Enter User Name' }]">
                 <label for="">User Name</label>
-                <el-input label="User Name" type="user_name" placeholder="User Name" v-model="ruleForm.user_name" autocomplete="off">
+                <el-input size="large" label="User Name" type="user_name" placeholder="User Name" v-model="ruleForm.user_name" autocomplete="off">
                 </el-input>
             </el-form-item>
             <el-form-item prop="phone" :rules="[{ required: true, message:'Please Enter Phone Number' }]">
         <label for="">Phone</label>
-        <el-input label="" type="phone" placeholder="Enter Phone Number" v-model="ruleForm.phone" autocomplete="off">
+        <el-input label="" size="large" type="phone" placeholder="Enter Phone Number" v-model="ruleForm.phone" autocomplete="off">
         </el-input>
-      </el-form-item>
-      <!-- <label for="" style="margin-bottom:10px;">Choose Payment Type</label>
-            <el-select class="payment_type_select" v-model="payment_type" placeholder="Choose Payment Type">
-                <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-                </el-option>
-            </el-select> -->
-      <!-- <el-form-item  prop="bank_acc_name">
-                <label for="">Bank Account Name:</label>
-                <el-input label="" type="Bank Account Name" placeholder="Bank Account Name" v-model="ruleForm.bank_acc_name" autocomplete="off">
-                </el-input>
-            </el-form-item>
-            <el-form-item  prop="bank_acc_number">
-                <label for="">Bank Account Number:</label>
-                <el-input label="" type="Bank Account Number" placeholder="Bank Account Number" v-model="ruleForm.bank_acc_number" autocomplete="off">
-                </el-input>
-            </el-form-item>
-            <el-form-item label="" prop="password">
-                <label for="">Password</label>
-                <el-input type="password" placeholder="Password" v-model="ruleForm.password" autocomplete="off">
-                </el-input>
-            </el-form-item>
-            <el-form-item label="" prop="confirm password">
-                <label for="">Confirm Password</label>
-                <el-input type="Confirm Password" placeholder="Confirm Password" v-model="ruleForm.confirm_password" autocomplete="off">
-                </el-input>
-            </el-form-item> -->
+      </el-form-item> -->
 
-      <el-button class="register_btn" :loading="login_loading" @click="EnterPhone('ruleForm')"
-        type="success">Confirm</el-button>
+      <v-btn size="large" class="register_btn" :disabled="loading" :loading="loading" @click="EnterPhone"
+        type="success">{{ $t('confirm') }}</v-btn>
 
 
 
-    </el-form>
-    <el-form v-if="active === 2" :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px"
-      class="demo-ruleForm">
-      <el-form-item prop="otp_code" :rules="[{ required: true, message:'Please Enter OTP Code' }]">
-        <label for="">OTP</label>
-        <el-input label="" type="otp" placeholder="Enter OTP" 
-              pattern="/^-?\d+\.?\d*$/"
-              onkeypress="if(this.value.length==6) return false;"
-              v-model="ruleForm.otp_code" autocomplete="off">
-        </el-input>
-      </el-form-item>
+    </v-form>
+    <v-form
+      ref="form"
+      @submit.prevent="EnterOTP"
+      v-model="valid" 
+      lazy-validation
+      v-if="active === 2"
+      style="padding-top:50px;"
+      
+    >
+      <!-- <v-text-field
+          variant="solo"
+          v-model="otp_code"
+          label="OTP code" 
+          pattern="/^-?\d+\.?\d*$/"
+          :rules="[v => !!v || 'User Name is required']"
+          required
+        ></v-text-field> -->
+        <div style="text-align: center;">
+          <img style="width:100px;padding-bottom: 20px;" src="https://shalpout.com/static/media/shal_pout.4cf8032a60f50a460fbc.png"/>
+        <p>{{ $t('verifyOtp') }}</p>
+        <v-otp-input
+        v-model="otp_code"
+        :loading="loading"
+        :disabled="loading" 
+        length="6"
+        variant="solo-filled"
+      ></v-otp-input>
 
-      <el-button class="register_btn" :loading="login_loading" @click="EnterOTP('ruleForm')"
-        type="success">Next</el-button>
+        <v-btn
+          :disabled="otp_code.length < 6 || loading"
+          class="register_btn"
+          color="#000"
+          size="large"
+          variant="tonal"
+          @click="EnterOTP"
+          
+        >{{ $t('confirm') }}</v-btn>
+        </div>
+       
+     
 
 
-
-    </el-form>
-    <el-form v-if="active === 3" :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px"
-      class="demo-ruleForm">
-      <el-form-item prop="password" :rules="[{ required: true, message:'Please Enter Password' }]">
+    </v-form>
+    <v-form
+      ref="form"
+      @submit.prevent="Register"
+      v-model="valid" 
+      lazy-validation
+      v-if="active === 3"
+      style="padding-top:50px;"
+      
+    > 
+    <p>{{ $t('newpass') }}</p>
+      <v-text-field
+          variant="solo"
+          v-model="password"
+          :placeholder="$t('newpass')" 
+          :rules="[v => !!v || 'Password is required']"
+          required
+          ></v-text-field>
+      <p>{{ $t('conpass') }}</p>
+          <v-text-field
+          variant="solo"
+          v-model="confirm_password"
+          :placeholder="$t('conpass')" 
+          :rules="[v => !!v || 'Confirm Password is required']"
+          required
+          ></v-text-field>
+      <!-- <el-form-item prop="password" :rules="[{ required: true, message:'Please Enter Password' }]">
         <label for="">Password</label>
-        <el-input label="" type="otp" placeholder="Enter Password" v-model="ruleForm.password" autocomplete="off">
+        <el-input size="large" label="" type="otp" placeholder="Enter Password" v-model="ruleForm.password" autocomplete="off">
         </el-input>
       </el-form-item>
       <el-form-item prop="confirm_password" :rules="[{ required: true, message:'Please Enter Confirm Password' }]">
         <label for="">Confirm Password</label>
-        <el-input label="" type="otp" placeholder="Enter Confirm Password" v-model="ruleForm.confirm_password" autocomplete="off">
+        <el-input size="large" label="" type="otp" placeholder="Enter Confirm Password" v-model="ruleForm.confirm_password" autocomplete="off">
         </el-input>
-      </el-form-item>
+      </el-form-item> -->
 
-      <el-button class="register_btn" :loading="login_loading" @click="Register('ruleForm')"
-        type="success">Register</el-button>
+      <v-btn size="large" class="register_btn" :disabled="loading" :loading="loading" @click="Register"
+        type="success">{{ $t('confirm') }}</v-btn>
 
 
 
-    </el-form>
-
+    </v-form>
+    <v-dialog
+      
+      v-model="RegisterDialog"
+      width="300"
+      class="logindialog"
+    >
+      <v-card>
+        <v-card-text>
+          <v-icon size="large">mdi-check-circle-outline</v-icon>
+         <h1 style="color:green;font-weight: bold;">Success</h1>
+         <p>Register Successful!</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="goHome">Welcome</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      
+      v-model="errorDialog"
+      width="300"
+      class="errordialog"
+    >
+      <v-card>
+        <v-card-text>
+          <v-icon size="large">mdi-close-circle-outline</v-icon>
+         <h1 style="color:#545454;font-weight: bold;">Sorry !</h1>
+         <p>Validation Error.</p>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="errorDialog = false">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
   
 <script>
-
+  import { useStore } from '~/store/state';
 export default {
   data() {
     return {
+      store : useStore(),
       active: 1,
-      // options: [{
-      //   value: 'Option1',
-      //   label: 'Option1'
-      // }, {
-      //   value: 'Option2',
-      //   label: 'Option2'
-      // }, {
-      //   value: 'Option3',
-      //   label: 'Option3'
-      // }, {
-      //   value: 'Option4',
-      //   label: 'Option4'
-      // }, {
-      //   value: 'Option5',
-      //   label: 'Option5'
-      // }],
-      // value: '',
-
-      login_loading: false,
+      loading: false,
+      otp: '',
+      RegisterDialog:false,
+      errorDialog:false,
+      valid:false,
+      loading: false,
       payment_type: '',
-      ruleForm: {
-        user_name: '',
+      user_name: '',
         phone: '',
         otp_code:'',
         payment_type: '',
@@ -125,85 +188,145 @@ export default {
         bank_acc_number: '',
         password: '',
         confirm_password: '',
-      },
     }
   },
   mounted() {
-
+    console.log(this.active,'active')
 
   },
   methods: {
-    EnterPhone(formName) {
+    goHome() {
+      this.RegisterDialog = false
+      this.$router.push('/');
+      // if (process.client) {
+      //   window.location.reload();
+      // }
+    },
+    onClick () {
+        this.loading = true
 
-      this.$refs[formName].validate((valid) => {
+        setTimeout(() => {
+          this.loading = false
+        }, 2000)
+      },
+    async EnterPhone () {
+          const { valid } = await this.$refs.form.validate()
 
-        if (valid) {
-          this.submitted = true;
-          this.fullscreenLoading = true;
-          let formData = new FormData();
-          // formData.append("name", this.ruleForm.name);
-          formData.append("phone", this.ruleForm.phone.replace(/[^\d]/g, ""));
-          formData.append("type", 'register');
-          // formData.append("user_name", this.ruleForm.user_name);
-          // formData.append("payment_type", this.payment_type);
-          // formData.append("bank_acc_name", this.ruleForm.bank_acc_name);
-          // formData.append("bank_acc_number", this.ruleForm.bank_acc_number);
-          // formData.append("password", this.ruleForm.password);
-          // formData.append("confirm_password", this.ruleForm.confirm_password)
-          // formData.append("countryName", this.results.countryCode);
-          // // formData.append("profile", this.image);
-
-          console.log(formData, 'formdata')
-          this.$axios
-            .post("https://backend.shalpouts.com/api/sent_otp", formData, {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            })
+             if (valid) {
+              this.loading = true
+            $fetch('/sent_otp', {
+              params: {
+                type:"register",
+                phone: this.phone.replace(/[^\d]/g, ""),
+            },
+            method:'post',
+            baseURL:'https://backend.shalpouts.com/api'
+          })
+   
+           
             .then((response) => {
-              console.log(response, 'sentotp')
-              if (response.data.status == 'success') {
-               if (this.active++ > 2) this.active = 0;
+
+              console.log(response, 'sent otp success')
+              if(response.status == 'success') {
+                this.loading = false
+                  
+                this.active = 2
+              }else {
+                this.loading = false
+                this.$snackbar.add({
+                  type: 'warning',
+                  text: 'Error Otp'
+              })
               }
-              /* setInterval,clearInterval*/
+
+
             })
             .catch((error) => {
-              this.submitted = false;
-              console.log(error);
+              console.log(error)
             });
+          // console.log(formData, 'formdata')
+          // this.$axios
+          //   .post("https://backend.shalpouts.com/api/sent_otp", formData, {
+          //     headers: {
+          //       "Content-Type": "multipart/form-data",
+          //     },
+          //   })
+          //   .then((response) => {
+          //     console.log(response, 'sentotp')
+          //     if (response.data.status == 'success') {
+          //      if (this.active++ > 2) this.active = 0;
+          //     }
+          //     /* setInterval,clearInterval*/
+          //   })
+          //   .catch((error) => {
+          //     this.submitted = false;
+          //     console.log(error);
+          //   });
           //if (this.active++ > 2) this.active = 0;
         } else {
           console.log("error submit!!");
           return false;
         }
-      })
+    
     },
-    EnterOTP(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.submitted = true;
-          this.$axios.post("https://backend.shalpouts.com/api/check_otp", {
-            type:"register",
-            phone: this.ruleForm.phone.replace(/[^\d]/g, ""),
-            otp_code: Number(this.ruleForm.otp_code)
+    async EnterOTP () {
+          const { valid } = await this.$refs.form.validate()
+
+             if (valid) {
+              this.loading = true
+            $fetch('/check_otp', {
+              params: {
+                type:"register",
+                phone: this.phone.replace(/[^\d]/g, ""),
+                otp_code: Number(this.otp_code)
+            },
+            method:'post',
+            baseURL:'https://backend.shalpouts.com/api'
           })
+  
+           
             .then((response) => {
 
-              console.log(response, 'register success')
-              if(response.data.status == 'success') {
-                if (this.active++ > 2) this.active = 0;
+              console.log(response, 'check otp success')
+              if(response.status == 'success') {
+                this.loading = false
+                this.active = 3
+                
+              }else {
+                this.loading = false
+                this.errorDialog = true
               }
 
 
             })
             .catch((error) => {
-              this.$message({
-                showClose: true,
-                message: error,
-                type: "warning",
-                duration: 2000,
-              });
+              this.$snackbar.add({
+                  type: 'warning',
+                  text: error
+              })
             });
+          // this.$axios.post("https://backend.shalpouts.com/api/check_otp", {
+          //   type:"register",
+          //   phone: this.ruleForm.phone.replace(/[^\d]/g, ""),
+          //   otp_code: Number(this.ruleForm.otp_code)
+          // })
+          //   .then((response) => {
+
+          //     console.log(response, 'register success')
+          //     if(response.data.status == 'success') {
+          //       if (this.active++ > 2) this.active = 0;
+          //     }
+
+
+          //   })
+          //   .catch((error) => {
+          //     this.$message({
+          //       showClose: true,
+          //       message: error,
+          //       type: "warning",
+          //       duration: 2000,
+          //     });
+          //   });
           //
 
           //if (this.active++ > 2) this.active = 0;
@@ -211,60 +334,71 @@ export default {
           console.log("error submit!!");
           return false;
         }
-      })
+
     },
-    Register(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          if(this.ruleForm.password == this.ruleForm.confirm_password) {
-            this.submitted = true;
-            this.$axios.post("https://backend.shalpouts.com/api/register", {
-              name:this.ruleForm.user_name,
-              phone: this.ruleForm.phone.replace(/[^\d]/g, ""),
-              password: this.ruleForm.password
-            })
+    async Register () {
+          const { valid } = await this.$refs.form.validate()
+
+             if (valid) {
+              this.loading = true
+              if(this.password == this.confirm_password) {
+                $fetch('/register', {
+              params: {
+                name:this.user_name,
+                phone: this.phone.replace(/[^\d]/g, ""),
+                password: this.password
+            },
+            method:'post',
+            baseURL:'https://backend.shalpouts.com/api'
+          })
+
             .then((response) => {
 
               console.log(response, 'register success')
-              if(response.data.status == 'success') {
-                if (this.active++ > 2) this.active = 0;
+              if(response.status == 'success') {
+                this.loading = false
+                this.RegisterDialog = true
+                this.userInfo = response.message
+                this.token = response.data.token
+                console.log(this.token)
+                console.log(this.userInfo)
+                const state = useState();
+               console.log(state,'//////////')
+            
+                 this.store.accessToken(this.token)
+                 this.store.logIn(this.userInfo)
+                  //this.$router.push('/games');
               }else {
-                this.$message({
-                showClose: true,
-                message: 'User Already Exit',
-                type: "warning",
-                duration: 2000,
-              });
+                this.loading = false
+                this.errorDialog = true
               }
 
 
             })
             .catch((error) => {
-              this.$message({
-                showClose: true,
-                message: error,
-                type: "warning",
-                duration: 2000,
-              });
+              this.$snackbar.add({
+                  type: 'error',
+                  text: error
+              })
+              if (this.active++ > 2) this.active = 0;
             });
+              }else {
+                this.$snackbar.add({
+                  type: 'error',
+                  text: 'pls check your password'
+              })
+                if (this.active++ > 2) this.active = 0;
+              }
+           
           }else {
-            this.$message({
-                showClose: true,
-                message: 'Password mar nay par tal',
-                type: "warning",
-                duration: 2000,
-              });
+            console.log('error sumit')
           }
          
           //
 
           //if (this.active++ > 2) this.active = 0;
-        } else {
-          console.log("error submit!!");
-          return false;
+     
         }
-      })
-    },
   },
 };
 </script>
@@ -273,6 +407,7 @@ export default {
 .register_form h1 {
   color: #ffc107;
   font-weight: bold;
+  padding-bottom: 30px;
 }
 
 .register_form {
@@ -291,12 +426,14 @@ export default {
   font-size: 16px;
 }
 
-.register_form .el-input__inner {
+.register_form .el-input--large .el-input__wrapper {
   background-color: #000;
   border: 2px solid #00640a;
   color: #fff;
 }
-
+.register_form .el-input--large .el-input__inner {
+  color: #fff;
+}
 .payment_type_select {
   width: 100%;
   margin-bottom: 10px;
@@ -325,14 +462,12 @@ export default {
 
 .register_btn {
   width: 100%;
-  color: #000;
   font-weight: bold;
   background: linear-gradient(180deg, #f6ce07 10%, #e2bf0c 100.01%);
   border: 1px solid #ffd52e;
   border-radius: 20px;
   margin-top: 20px;
-  color: #000;
-
+  color:#000 !important;
 }
 
 .register_btn:hover {
@@ -343,6 +478,9 @@ export default {
 .register_form .el-button+.el-button {
   margin: 0;
   font-size: 16px;
+}
+.register_form p {
+  color:#fff;
 }
 </style>
   

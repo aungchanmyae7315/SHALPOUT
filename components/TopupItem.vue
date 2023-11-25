@@ -3,10 +3,10 @@
 
 
 
-        <el-row class="profile_btns">
-            <el-col :span="8">
-                <nuxt-link type="text" to="/topup">
-                    <el-button class="deposit_btn">
+        <v-row class="profile_btns">
+            <v-col cols="4" lg="4">
+                <nuxt-link type="text" to="/deposite">
+                    <v-btn size="large" class="deposit_btn">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="wallet"
                             class="svg-inline--fa fa-wallet " role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512">
@@ -15,12 +15,12 @@
                             </path>
                         </svg>
                         <h6>Deposit</h6>
-                    </el-button>
+                    </v-btn>
                 </nuxt-link>
-            </el-col>
-            <el-col :span="8">
+            </v-col>
+            <v-col cols="4" lg="4">
                 <nuxt-link type="text" to="/withdraw">
-                    <el-button class="withdrawal_btn">
+                    <v-btn size="large" class="withdrawal_btn">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="right-from-bracket"
                             class="svg-inline--fa fa-right-from-bracket " role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512">
@@ -29,12 +29,12 @@
                             </path>
                         </svg>
                         <h6>Withdraw</h6>
-                    </el-button>
+                    </v-btn>
                 </nuxt-link>
-            </el-col>
-            <el-col :span="8">
+            </v-col>
+            <v-col cols="4" lg="4">
                 <nuxt-link type="text" to="/history">
-                    <el-button class="history_btn">
+                    <v-btn size="large" class="history_btn">
                         <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="clock-rotate-left"
                             class="svg-inline--fa fa-clock-rotate-left " role="img" xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 512 512">
@@ -43,133 +43,87 @@
                             </path>
                         </svg>
                         <h6>History</h6>
-                    </el-button>
+                    </v-btn>
                 </nuxt-link>
-            </el-col>
-            <!-- <div style="padding:0 5px">
-                <el-button type="text" class="show_only_deposit">
-                    <h4>Deposit</h4>
-                </el-button>
-            </div> -->
+            </v-col>
+            <v-row style="width:100%;">
+                <v-col>
+                    <v-btn width="98%" size="large" type="text" class="show_only_deposit">
+                        <span>Deposit</span>
+                    </v-btn>
+                </v-col>
 
-        </el-row>
-        <el-card v-if="active == 1" class="bank_card">
-            <el-row v-for="bank in banks" :key="bank">
-                <div class="" @click="bankOff(bank.type)">
-                    <el-radio class="bank_detail" v-model="selectBank" :label="bank">
-                        <el-col :span="20" style="text-align: left;">
-                            <div class="">
-                                <img :src="bank.bank_image" alt class="" />
-                                <span class="bank_name">{{ bank.type }}</span>
+            </v-row>
 
-                            </div>
-                        </el-col>
-                        <el-col :span="4">
-                            <div class="check_icon_btn">
-                                <i v-if="selectBank.type == bank.type" class="el-icon-success"></i>
-                                <i v-else class="el-icon-remove-outline"></i>
-                            </div>
-                        </el-col>
-                    </el-radio>
-                </div>
-            </el-row>
-            <el-button class="selectBank_btn" @click="selectBank_btn('ruleForm')" type="success">Topup</el-button>
-        </el-card>
+        </v-row>
+        <div class="bg_green">
+            <v-row>
+                <v-col v-for="(bank, index) in banks" :key="index" cols="12" lg="4">
+                    <v-radio-group v-model="radios">
+                        <v-radio :label="bank.type" :value="bank.type">
+                            <template style="color:#fff !important;" v-slot:label>
+                                <div>
+                                    <v-card width="100%" @click="addClass(bank.id)"
+                                        v-bind:class="{ bank_bgColor: (bank.id === activeId) }" :title="bank.type"
+                                        :subtitle="bank.account_number">
 
-        <el-card class="bankinfo" v-if="active == 2">
-            <img :src="selectBank.bank_image" alt="">
-            <el-row class="copy_bank_account">
-                <el-col :span="18" style="text-align: left;">
-                    <h6>Account Name:{{ selectBank.admin_account_name }}</h6>
-                    <p>{{ selectBank.account_number }}</p>
-                </el-col>
-                <el-col :span="6" style="text-align: right;">
-                    <el-button @click.stop.prevent="copyTestingCode(selectBank.account_number)" round>
-                        <span class="ml-auto">{{ $t("Copy") }}</span></el-button>
-                </el-col>
+                                        <template v-slot:prepend>
+                                            <v-avatar size="45">
+                                                <v-img :src="bank.bank_image" alt="John"></v-img>
+                                            </v-avatar>
 
+                                        </template>
+                                        <template v-slot:append>
+                                            <v-avatar class="copy_icon">
+                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="copy"
+                                                    class="svg-inline--fa fa-copy " role="img"
+                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                                    <path fill="currentColor"
+                                                        d="M272 0H396.1c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9V336c0 26.5-21.5 48-48 48H272c-26.5 0-48-21.5-48-48V48c0-26.5 21.5-48 48-48zM48 128H192v64H64V448H256V416h64v48c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V176c0-26.5 21.5-48 48-48z">
+                                                    </path>
+                                                </svg>
+                                            </v-avatar>
+                                        </template>
 
-            </el-row>
-            <el-form @submit.native.prevent :model="ruleForm" ref="ruleForm" class="demo-ruleForm">
+                                    </v-card>
+                                </div>
+                            </template>
+                        </v-radio>
 
-                <p style="text-align: left;">{{ $t('Transaction Number') }}</p>
-                <el-form-item prop="transaction_number" :rules="[{ required: true, message: $t('Transaction_required') }]"
-                    class="tran_input">
-
-                    <el-input ref="test" type="text" :placeholder="$t('Enter Transaction Number')"
-                        v-model="ruleForm.transaction_number"></el-input>
-                </el-form-item>
-                <p style="text-align: left;">{{ $t('Cash Amount') }}</p>
-                <el-form-item prop="tran_amount" :rules="[{ required: true, message: $t('amount_required') }]"
-                    class="tran_input">
-
-                    <el-input ref="test" type="text" :placeholder="$t('Enter transferred amount')"
-                        v-model="ruleForm.tran_amount"></el-input>
-                </el-form-item>
+                    </v-radio-group>
+                </v-col>
+            </v-row>
 
 
+            <v-form ref="form" @submit.prevent="TopupSubmit" v-model="valid" lazy-validation>
+
+                <v-row class="deposit_inputs">
+
+                    <v-col cols="12" lg="3">
+
+                        <v-text-field :height="20" variant="solo" v-model="tran_amount" placeholder="Deposit Amount"
+                            :rules="[v => !!v || 'Deposit amount is required']" required></v-text-field>
+                    </v-col>
+                    <v-col cols="12" lg="3">
+                        <v-text-field variant="solo" v-model="transaction_number" placeholder="Enter Transaction Number"
+                            :rules="[v => !!v || 'Enter Transaction Number is required']" required></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" lg="3">
+                        <v-file-input prepend-icon="mdi-camera" clearable label="File input"
+                            variant="solo-filled"></v-file-input>
+                    </v-col>
+                    <v-col cols="12" lg="3">
+                        <v-btn class="topup_submit_btn"  :disabled="loading"
+                        :loading="loading"  @click="TopupSubmit" type="success">Confirm</v-btn>
+                    </v-col>
 
 
 
-                <el-row>
-                    <el-radio-group v-model="radio_amount" size="medium" class="swipe_button1" @change="select_amount">
-                        <el-radio-button label="5000">5,000</el-radio-button>
-                        <el-radio-button label="10000">10,000</el-radio-button>
-                        <el-radio-button label="50000">50,000</el-radio-button>
-                        <el-radio-button label="100000">100,000</el-radio-button>
-                        <el-radio-button label="200000">200,000</el-radio-button>
-                        <el-radio-button label="500000">500,000</el-radio-button>
-                    </el-radio-group>
-                </el-row>
+                </v-row>
+            </v-form>
 
-
-            </el-form>
-            <div class="btn_group">
-                <el-button class="cancel_btn" @click="cancel()" type="info">Back</el-button>
-                <el-button class="selectBank_btn" @click="TopupSubmit('ruleForm')" type="success">Confirm</el-button>
-            </div>
-           
-        </el-card>
-
-        <!--       
-            <el-row class="deposit_inputs">
-                <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px"
-                    class="demo-ruleForm">
-                    <el-col :span="5">
-                        <el-form-item prop="phone" :rules="[{ required: true, message: 'Please Enter Phone Number' }]">
-                            <el-input label="Phone Number" type="phone" placeholder="Phone Number" v-model="ruleForm.phone"
-                                autocomplete="off"></el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="5">
-                        <el-form-item prop="bank_name" :rules="[{ required: true, message: 'Please Enter Bank Name' }]">
-                            <el-input label="" type="text" placeholder="Enter Bank Name" v-model="ruleForm.bank_name"
-                                autocomplete="off"> </el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="5">
-                        <el-form-item prop="amount" :rules="[{ required: true, message: 'Please Enter Amount' }]">
-                            <el-input label="" type="text" placeholder="Enter Amount" v-model="ruleForm.amount"
-                                autocomplete="off">
-                            </el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="5">
-                        <el-form-item prop="tran_number"
-                            :rules="[{ required: true, message: 'Please Enter Transaction Number' }]">
-                            <el-input label="" type="text" placeholder="Enter Transaction Number"
-                                v-model="ruleForm.tran_number" autocomplete="off"> </el-input>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="4">
-                        <el-button class="deposit_btn" :loading="login_loading" @click="slipUpload('ruleForm')"
-                         type="success">Confirm</el-button>
-                    </el-col>
-
-                </el-form>
-               
-            </el-row> -->
-
+        </div>
 
 
 
@@ -177,6 +131,7 @@
 </template>
 
 <script>
+import { useStore } from '~/store/state';
 // import ProfileDetail from '~/components/ProfileDetail';
 export default {
 
@@ -185,29 +140,34 @@ export default {
         // TheFooter
     },
     mounted() {
+
         let token = localStorage.getItem("token");
         if (token) {
-            this.$axios
-                .get("profile", {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    },
-                })
+            $fetch('/profile', {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                method: 'post',
+                baseURL: 'https://backend.shalpouts.com/api'
+            })
                 .then((response) => {
-                    this.profile = response.data.data;
-                    this.$store.commit("profile", this.profile)
-                    console.log(response, 'profile api')
+                    this.profile = response.data;
+                    console.log(this.profile, 'profile api')
+                    let store = useStore()
+                    store.profile(this.profile)
 
                 })
-            this.$axios
-                .get("bank_api", {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    },
-                })
+            $fetch('/bank_api', {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+                method: 'post',
+                baseURL: 'https://backend.shalpouts.com/api'
+            })
                 .then((response) => {
-                    console.log(response, 'bank api')
-                    this.banks = response.data.data
+
+                    this.banks = response.data
+                    console.log(this.banks, 'bank api')
 
                 })
         }
@@ -215,29 +175,31 @@ export default {
     },
     data() {
         return {
+            loading:false,
+            state: useStore(),
+            radios: '',
+            activeId: 0,
+
+            isSet: false,
+
             active: 1,
             percentage: 0,
 
             radio_amount: '',
             title: 'Deposite',
+            valid: false,
             selectBank: '',
             banks: [],
-            ruleForm: {
-                phone: '',
-                bank_name: '',
-                tran_amount: '',
-                transaction_number: ''
-            },
+            phone: '',
+            bank_name: '',
+            tran_amount: '',
+            transaction_number: ''
 
         }
     },
     head() {
         var lang = localStorage.getItem('locale')
-        if (lang == 'en') {
-            var url = 'https://www.bkk2d.com/sitemap/'
-        } else {
-            var url = 'https://www.bkk2d.com/sitemap/'
-        }
+
         return {
             title: this.title,
             meta: [
@@ -255,18 +217,30 @@ export default {
         }
     },
     methods: {
+
+        addClass: function (id) {
+            console.log(id, 'okkkkk iddddd')
+            this.activeId = id;
+
+
+        },
+
+        toggleIsSet(index) {
+
+            // this.isSet = !this.isSet
+        },
         selectBank_btn() {
-            if(this.selectBank) {
+            if (this.selectBank) {
                 if (this.active++ > 1) this.active = 2;
-            }else {
+            } else {
                 this.$message({
-                showClose: true,
-                message: "Please Select A Bank",
-                type: "warning",
-                duration: 2000,
+                    showClose: true,
+                    message: "Please Select A Bank",
+                    type: "warning",
+                    duration: 2000,
                 });
             }
-            
+
         },
         select_amount() {
             this.ruleForm.tran_amount = ''
@@ -301,73 +275,106 @@ export default {
         cancel() {
             if (this.active-- > 1) this.active = 1;
         },
-        TopupSubmit(formName) {
-            this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    this.submitted = true;
-                    let token = localStorage.getItem("token");
-                    let profile = JSON.parse(localStorage.getItem('profile'))
-                    var data_deposit = {
+        async TopupSubmit() {
+            const { valid } = await this.$refs.form.validate()
 
-                        phone: profile.phone,
-                        bank_name: this.selectBank.type,
-                        admin_account: this.selectBank.admin_account_name,
-                        amount: this.ruleForm.tran_amount,
-                        transaction_number: this.ruleForm.transaction_number,
+            if (valid) {
+                
+                let token = localStorage.getItem("token");
+                let profile = JSON.parse(localStorage.getItem('profile'))
+                var data_deposit = {
 
-                    }
-                    console.log(data_deposit, '?????????/')
+                    phone: profile.phone,
+                    bank_name: this.radios,
+                    admin_account: this.radios,
+                    amount: this.tran_amount,
+                    transaction_number: this.transaction_number,
 
-                    if (token) {
-                        this.$axios
-                            .post("wallet_deposit", data_deposit, {
-                                headers: {
-                                    Authorization: "Bearer " + token,
-                                },
-                            })
+                }
+                this.loading = true
+                console.log(data_deposit, '/////')
+                if (token) {
+                    if (this.radios) {
+                        $fetch('/wallet_deposit', {
+                            params: {
+                                phone: profile.phone,
+                                bank_name: this.radios,
+                                admin_account: this.radios,
+                                amount: this.tran_amount,
+                                transaction_number: this.transaction_number,
+                            },
+                            headers: {
+                                Authorization: "Bearer " + token,
+                            },
+                            method: 'post',
+                            baseURL: 'https://backend.shalpouts.com/api'
+                        })
 
 
                             .then((response) => {
 
-                                console.log(response, 'register success')
-                                if (response.data.status == 'success') {
-                                    this.$message({
-                                    showClose: true,
-                                    message: "Topup Success",
-                                    type: "success",
-                                    duration: 2000,
-                                    });
-                                    if (this.active-- > 1) this.active = 1;
-                                    this.selectBank = '';
+                                console.log(response, 'wallet_deposit success')
+                                if (response.status == 'success') {
+                                    this.loading = false
+                                    this.$snackbar.add({
+                                        type: 'success',
+                                        text: 'Wallet Deposit Success'
+                                    })
+
+                                    this.radios = '';
+                                } else {
+                                    this.loading = false
+                                    this.$snackbar.add({
+                                        type: 'error',
+                                        text: response.status
+                                    })
                                 }
 
 
                             })
                             .catch((error) => {
-                                this.$message({
-                                    showClose: true,
-                                    message: error,
-                                    type: "warning",
-                                    duration: 2000,
-                                });
+                                this.loading = false
+                                this.$snackbar.add({
+                                    type: 'error',
+                                    text: error
+                                })
                             });
+                    } else {
+                        this.loading = false
+                        this.$snackbar.add({
+                            type: 'warning',
+                            text: 'Please Select a Bank'
+                        })
                     }
 
-                    //
-
-                    //if (this.active++ > 2) this.active = 0;
-                } else {
-                    console.log("error submit!!");
-                    return false;
                 }
-            })
-        },
 
+                //
+
+                //if (this.active++ > 2) this.active = 0;
+            } else {
+                console.log("error submit!!");
+                return false;
+            }
+
+
+        }
     },
 }
 </script>
 
 <style >
+.is-active {
+    color: #fff;
+}
+
+
+.v-radio-group>.v-input__control {
+    background-color: #ddd;
+    border-radius: 9px;
+}
+
+
 .bank_detail {
     align-items: center;
     background-color: #ddd;
@@ -464,7 +471,8 @@ export default {
 }
 
 .profile_btns {
-    padding: 20px 0;
+    padding-top: 20px;
+
     text-align: center;
 }
 
@@ -487,34 +495,23 @@ export default {
     margin: 0;
 }
 
-.profile_btns .show_only_deposit {
-    width: 100% !important;
-    padding: 12px 10px;
-    margin-top: 8px;
-    background-color: #ffc107;
-    color: #000;
-    font-weight: bold;
-    border: 0;
-    cursor: unset;
-}
-
-.profile_btns .show_only_deposit:active {
-    border: 0 !important;
-}
 
 .topup .profile_btns .deposit_btn {
     background-color: #ffc107;
+    height: 63px;
     color: #000;
     border: 0;
 }
 
-.deposit_inputs .el-col {
-    margin-right: 10px;
-}
 
-.deposit_btn {
+
+.deposit_btn,
+.withdrawal_btn,
+.history_btn,
+.topup_btn {
     width: 100% !important;
 }
+
 
 .bank_card {
     max-width: 480px;
@@ -567,13 +564,15 @@ export default {
     padding: 0 3px;
 }
 
-.bankinfo .el-radio-button__orig-radio:checked+.el-radio-button__inner {
-    background-color: #05a11f !important;
-    color: #fff;
-    font-weight: bold;
-    box-shadow: unset;
-    border: 0;
+.topup .v-img__img--cover {
+    background-size: cover;
+    object-fit: unset;
 }
+
+.topup .v-avatar {
+    border-radius: 9px;
+}
+
 
 .copy_bank_account {
     display: -webkit-box;
@@ -592,13 +591,13 @@ export default {
 .copy_bank_account .el-col-6 {
     padding-top: 10px;
 }
+
 .btn_group {
-    margin-top:30px;
+    margin-top: 30px;
 }
+
 .btn_group .el-button {
-    width:47% !important;
-    padding:20px 10px !important;
+    width: 47% !important;
+    padding: 20px 10px !important;
 }
-
-
 </style>

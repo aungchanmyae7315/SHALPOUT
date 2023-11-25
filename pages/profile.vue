@@ -14,6 +14,7 @@
     import TopupItem from '~/components/TopupItem';
     
      import TheFooter from '~/components/TheFooter'
+import { useStore } from '~/store/state';
 
 
     export default {
@@ -23,34 +24,31 @@
         TheFooter,
         TopupItem
 },
+mounted() {
+            this.updateIsLoggedIn();
+            this.updateLang();
+        },
         data() {
             return {
-                title: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D'
+               store:useStore()
             }
         },
-         head() {
-             var lang = localStorage.getItem('locale')
-             if(lang == 'en') {
-                 var url = 'https://www.bkk2d.com/sitemap/'
-             }else {
-                 var url = 'https://www.bkk2d.com/sitemap/' 
-             }
-        return {
-            title: this.title,
-           meta: [
-                {
-                    hid: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D',
-                    name: 'แผนผังเว็บไซต์ | เว็บไซต์คาสิโนออนไลน์ BKK2D',
-                    content: 'ค้นหาลิงก์และรับหน้าเว็บไซต์ทั้งหมดโดยตรงจากแผนผังเว็บไซต์'
+        methods: {
+        updateIsLoggedIn() {
+                    this.store.updateIsLoggedIn(this.hasUserInfo());
                 },
-
-            ],
-            link: [
-                { rel: 'icon', type: 'image/x-icon', href: '/images/bkk2d.png', defer: true },
-                { rel: 'canonical', href:url }
-            ]
-        }
-      }
+                hasUserInfo() {
+                return Boolean(localStorage.getItem("userInfo"));
+                },
+                updateLang() {
+                    this.store.updateLang(this.hasLang());
+                },
+                hasLang() {
+                    return Boolean(localStorage.getItem("locale"));
+                },
+      
+      
+    },
     }
 </script>
 
